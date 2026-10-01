@@ -1,0 +1,80 @@
+{
+  "slug": "pulsegrid-mesh",
+  "name": "PulseGrid Agent Mesh",
+  "description": "An eight-agent mesh for road safety, cold-chain integrity, disruption-aware freight routing and emergency corridors on Indian transport corridors. Orchestrator GRIDMASTER dispatches specialists, feeds each result forward, enforces guardrails and stops at human gates.",
+  "function": "transportation_safety_and_logistics_intelligence",
+  "prompts": [
+    "prompts/gridmaster.md",
+    "prompts/corridorsense.md",
+    "prompts/safetysentinel.md",
+    "prompts/reroute.md",
+    "prompts/coldguard.md",
+    "prompts/hubsync.md",
+    "prompts/saarthi.md",
+    "prompts/greenlane.md",
+    "prompts/trustledger.md"
+  ],
+  "evals": [
+    "evals/gridmaster.eval.json"
+  ],
+  "tools": [
+    "vision_analyze_road_damage",
+    "weather_flood_alert",
+    "road_closure_feed",
+    "hotspot_score",
+    "driver_duty_status",
+    "ulip_track_and_trace",
+    "route_solver",
+    "rsl_model",
+    "find_precooling_node",
+    "find_rest_facility",
+    "carbon_footprint",
+    "modal_shift_option",
+    "postgis_upsert_defect",
+    "open_sla_ticket",
+    "publish_advisory",
+    "notify_party",
+    "book_slot",
+    "hub_slot_allocator",
+    "signal_preempt",
+    "schedule_rest",
+    "anchor_proof",
+    "smart_contract_clause"
+  ],
+  "guardrails": {
+    "data_access": [
+      "corridor geometry",
+      "shipment manifests",
+      "reefer telemetry",
+      "driver duty logs"
+    ],
+    "allowed_actions": [
+      "reroute",
+      "divert_to_precooling",
+      "open_sla_ticket",
+      "publish_advisory",
+      "signal_preempt",
+      "schedule_rest",
+      "anchor_proof",
+      "notify_party"
+    ],
+    "human_approval_required": [
+      "public hazard advisories",
+      "spend above the shipment threshold",
+      "any financial settlement",
+      "hazmat or overloaded rerouting"
+    ],
+    "may_not": [
+      "dispose_of_cargo",
+      "trade_rest_for_schedule",
+      "act_on_infrastructure_directly"
+    ]
+  },
+  "provenance": {
+    "builtBy": "PulseGrid",
+    "runsAt": "any cloud (Docker / Render / Vercel static + API)",
+    "dataAccess": "synthetic demo data; ULIP / Gati Shakti adapters designed, keys not held",
+    "price": "free (MIT)",
+    "version": "2.0.0"
+  }
+}

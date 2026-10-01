@@ -1,0 +1,101 @@
+# =============================================================================
+# PulseGrid — aiKart Agent Manifest
+# BharatAgentic Hackathon submission (Method 1)
+#
+# Conforms to the aiKart Agent Manifest Guide v1 (apiVersion: aikart.dev/v1),
+# which specifies the "Try Me Now" sandbox contract:
+#   - aiKart starts an isolated container from runtime.image
+#   - writes the buyer's answers to  /aikart/input.json  (also $AIKART_INPUT)
+#   - reads the result from          /aikart/output.json
+#     shaped exactly: { "format": "markdown", "response": "<output>" }
+#   - expects exit code 0
+#
+# server/src/sandbox.js implements that contract. runtime.command below points
+# the container at it, overriding the image's default CMD (which serves the
+# HTTP API used by Method 2 — so ONE image serves both submission methods).
+#
+# BEFORE SUBMITTING: replace the image reference below with your own publicly
+# pullable image, then upload this file in the aiKart listing wizard under
+# "Try / Run My Agent" -> "Yes, enable it".
+# =============================================================================
+
+apiVersion: aikart.dev/v1
+kind: AgentManifest
+
+metadata:
+  name: pulsegrid-agent-mesh
+  displayName: "PulseGrid Agent Mesh"
+  description: "Eight AI agents that keep Indian road-freight corridors safe, unspoiled and moving — rerouting around floods, saving cargo from spoilage, clearing emergency corridors."
+
+runtime:
+  type: docker
+  # MUST be publicly pullable (Docker Hub / GHCR). Replace <your-user>.
+  image: "docker.io/<your-user>/pulsegrid-agent:2.0.0"
+  # Overrides the image CMD with the aiKart sandbox entrypoint.
+  command:
+    - node
+    - server/src/sandbox.js
+
+resources:
+  cpu: 1              # cap 2
+  memoryMb: 1024      # cap 4096
+  timeoutSeconds: 120 # cap 280
+
+# The form a buyer fills in before running the agent.
+inputs:
+  - name: request
+    label: "Describe the problem"
+    type: textarea
+    required: true
+    default: "A vaccine truck is heading to Kochi and there is a flood on NH-544"
+
+  - name: driver_language
+    label: "Driver's language"
+    type: select
+    required: false
+    default: "en-IN"
+    options:
+      - en-IN
+      - hi-IN
+      - bn-IN
+      - ta-IN
+      - te-IN
+      - mr-IN
+      - gu-IN
+      - kn-IN
+      - ml-IN
+      - pa-IN
+      - or-IN
+      - as-IN
+      - ur-IN
+      - ne-IN
+      - kok-IN
+      - mai-IN
+      - doi-IN
+      - brx-IN
+      - mni-IN
+      - sa-IN
+      - sat-IN
+      - sd-IN
+      - ks-IN
+
+  - name: driver_id
+    label: "Driver ID (optional)"
+    type: text
+    required: false
+    default: "D-3310"
+
+  - name: speed_kmh
+    label: "Vehicle speed in km/h (optional — dashcam capture is only valid below 60)"
+    type: number
+    required: false
+    default: 52
+
+output:
+  format: markdown
+
+security:
+  # PulseGrid needs NO outbound network access: every tool is local, and the
+  # simulators that stand in for external services are deterministic. The agent
+  # therefore runs correctly in a fully isolated sandbox.
+  networkEgress: none

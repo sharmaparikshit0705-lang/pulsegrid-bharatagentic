@@ -1,0 +1,4 @@
+{
+  "files.associations": { "Dockerfile": "dockerfile" },
+  "task.autoDetect": "off"
+}

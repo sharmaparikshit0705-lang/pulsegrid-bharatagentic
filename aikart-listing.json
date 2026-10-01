@@ -1,0 +1,77 @@
+{
+  "_comment": "aiKart marketplace listing payload — Method 2 submission. Fields follow the 'API Endpoints Listing' walkthrough: product details, description, category, target industries, pricing, team information, and media assets referenced by URL. Confirm the exact endpoint and field names against the aiKart API docs / dashboard when you have API access — placeholders in {{...}} are substituted from the environment by scripts/submit-listing.mjs.",
+  "name": "PulseGrid Agent Mesh",
+  "tagline": "Eight AI agents that keep Indian road-freight corridors safe, unspoiled and moving.",
+  "description": "PulseGrid is an agentic layer for India's freight and mobility corridors. A GRIDMASTER orchestrator decomposes a free-form request, dispatches specialist agents in dependency order, feeds each agent's result into the next, enforces guardrails, and stops at a human gate before public-facing or above-threshold actions. Eight specialists cover road-surface defects and municipal SLA, disruption-aware rerouting, cold-chain shelf life, driver welfare, emergency corridor pre-emption, multimodal handovers, carbon accounting and tamper-evident evidence. Every step and tool call is recorded in a replayable run.",
+  "category": "Logistics & Mobility",
+  "target_industries": [
+    "Logistics & freight",
+    "Transportation & mobility",
+    "Municipal & public infrastructure",
+    "Agriculture & cold chain",
+    "Emergency services"
+  ],
+  "problem_statement": "India's road-freight and mobility corridors kill and waste at scale. In 2024 there were 4,87,707 road accidents and 1,77,175 deaths — about 20 deaths every hour — with over-speeding behind 70.3% of fatalities and potholes, curves and steep grades behind 13.8% of all accidents. Separately, 6.02–15.05% of fruit and 4.87–11.61% of vegetables are lost before reaching a buyer, and transport is the single largest loss stage. Logistics costs India ₹24 lakh crore a year (7.97% of GDP).",
+  "solution_summary": "A mesh of eight agents, coordinated by GRIDMASTER, that reasons over costed options, acts through 23 instrumented tools, respects hard guardrails, and stops for a human before irreversible or public-facing actions. It runs on the fleets, phones and signals India already has — no new capital expenditure.",
+  "agent_endpoint": "{{AGENT_ENDPOINT}}",
+  "agent_endpoint_method": "POST",
+  "agent_endpoint_contract": {
+    "request": "{ \"request\": \"A vaccine truck is heading to Kochi and there is a flood on NH-544\", \"context\": { \"driver_id\": \"D-3310\", \"driver_language\": \"ml-IN\" } }",
+    "response": "plan (intents, rationale, confidence) + full replayable reasoning trace + actions taken + outcome metrics + approval gates + evidence hashes",
+    "schema": "{{AGENT_ENDPOINT}}/schema"
+  },
+  "pricing": {
+    "model": "free",
+    "note": "Open source under MIT. Free to run; the prototype uses no paid external services."
+  },
+  "team": {
+    "name": "{{TEAM_NAME}}",
+    "members": [
+      "{{TEAM_MEMBERS}}"
+    ],
+    "contact_email": "{{CONTACT_EMAIL}}"
+  },
+  "media": {
+    "logo_url": "{{LOGO_URL}}",
+    "cover_image_url": "{{COVER_URL}}",
+    "tutorial_video_url": "{{VIDEO_URL}}",
+    "dashboard_url": "{{DASHBOARD_URL}}",
+    "repository_url": "{{REPO_URL}}",
+    "supporting_documents": [
+      {
+        "label": "Submission pack",
+        "url": "{{REPO_URL}}/blob/main/SUBMISSION-BharatAgentic.md"
+      },
+      {
+        "label": "Agent manifest",
+        "url": "{{REPO_URL}}/blob/main/agent.manifest.yaml"
+      },
+      {
+        "label": "Demo script",
+        "url": "{{REPO_URL}}/blob/main/DEMO.md"
+      }
+    ]
+  },
+  "capabilities": [
+    "Disruption-aware freight rerouting around floods and closures, with costed trade-offs",
+    "Cold-chain shelf-life modelling with automatic diversion before spoilage",
+    "Road-surface defect detection driving a municipal repair SLA",
+    "Emergency corridor pre-emption across signalised junctions",
+    "Driver fatigue monitoring with enforced rest and vernacular voice alerts",
+    "Carbon accounting and lower-carbon mode options",
+    "Tamper-evident evidence anchoring and paperless contract clauses",
+    "Multilingual output: English plus 22 Indian languages, with speech"
+  ],
+  "impact": {
+    "time_saved": "Emergency pre-emption saves ~55 s per junction; 8 junctions ≈ 7 minutes per emergency run.",
+    "cost_reduced": "One prevented cold-chain rejection ≈ ₹3.4 lakh of cargo preserved (computed live in the prototype).",
+    "accessibility": "Driver alerts in the driver's own language — English plus 22 Indian languages, with speech output.",
+    "verification": "17 outcome assertions run live in the dashboard and in CI; 33 assertions in the agent test suite."
+  },
+  "compliance": {
+    "licence": "MIT",
+    "personal_data": "None processed in the prototype.",
+    "network_egress": "None required — all tools are local and deterministic simulators are labelled.",
+    "disclosure": "Tools that would call an external service (vision scoring, weather feed, ULIP track-and-trace, ledger) are deterministic simulators, labelled `simulated` in every trace. Routing, the shelf-life model, fatigue scoring, carbon maths and evidence hashing are real computation."
+  }
+}

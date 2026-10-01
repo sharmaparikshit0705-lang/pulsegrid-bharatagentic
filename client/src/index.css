@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply font-display antialiased text-slate-200;
+    background-color: #070b14;
+    background-image:
+      radial-gradient(1100px 520px at 12% -8%, rgba(0, 240, 255, 0.07), transparent 60%),
+      radial-gradient(900px 480px at 88% 108%, rgba(0, 255, 102, 0.05), transparent 60%),
+      radial-gradient(700px 380px at 50% 50%, rgba(255, 51, 102, 0.03), transparent 65%);
+    background-attachment: fixed;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  /* Frosted glass card */
+  .glass {
+    @apply rounded-2xl border border-white/10 bg-white/[0.04] shadow-[0_8px_32px_rgba(0,0,0,0.45)] backdrop-blur-xl;
+  }
+  .glass-inset {
+    @apply rounded-xl border border-white/10 bg-black/30;
+  }
+  .neon-text-cyan {
+    color: #00f0ff;
+    text-shadow: 0 0 14px rgba(0, 240, 255, 0.55);
+  }
+  .neon-text-green {
+    color: #00ff66;
+    text-shadow: 0 0 14px rgba(0, 255, 102, 0.5);
+  }
+  .neon-text-red {
+    color: #ff3366;
+    text-shadow: 0 0 14px rgba(255, 51, 102, 0.55);
+  }
+  .btn {
+    @apply pointer-events-auto inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold tracking-wide transition-all duration-150 active:scale-95 disabled:pointer-events-none disabled:opacity-40;
+  }
+  .btn-cyan {
+    @apply btn border-cyan-400/40 text-cyan-300 hover:bg-cyan-400/10 hover:shadow-neon-cyan;
+  }
+  .btn-green {
+    @apply btn border-emerald-400/40 text-emerald-300 hover:bg-emerald-400/10 hover:shadow-neon-green;
+  }
+  .btn-red {
+    @apply btn border-rose-500/50 text-rose-300 hover:bg-rose-500/10 hover:shadow-neon-red;
+  }
+  .btn-ghost {
+    @apply btn border-white/10 text-slate-300 hover:bg-white/5;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase;
+  }
+  .label-mono {
+    @apply font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500;
+  }
+}
+
+/* ---------- Simulation animations ---------- */
+
+/* Simulated camera-feed scanlines + noise shimmer */
+@keyframes feed-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.feed-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(0, 240, 255, 0.06) 50%,
+    transparent 70%
+  );
+  animation: feed-shimmer 3.5s ease-in-out infinite;
+}
+.feed-scanlines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.035) 0px,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+
+/* Data packets flowing along the footage pipeline */
+@keyframes flow-dot {
+  0% {
+    left: -6px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% + 6px);
+    opacity: 0;
+  }
+}
+.flow-dot {
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  animation: flow-dot 2.4s linear infinite;
+}
+
+/* Vehicles sliding along the green lane strip */
+@keyframes lane-drive {
+  0% {
+    transform: translateX(-15%);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(860%);
+    opacity: 0;
+  }
+}
+
+/* Green-lane chevron markings flowing along the bus lane */
+@keyframes lane-flow {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 44px;
+  }
+}
+
+/* U-turn marker pulse */
+@keyframes marker-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 255, 102, 0);
+  }
+}
+.marker-pulse {
+  animation: marker-pulse 2.2s ease-out infinite;
+}
+
+/* ---------- v2 visual layer: aurora, ticker, conic glow ---------- */
+
+/* Drifting aurora background */
+@keyframes aurora-drift {
+  0%   { transform: translate3d(-4%, -2%, 0) scale(1); }
+  50%  { transform: translate3d(4%, 3%, 0) scale(1.08); }
+  100% { transform: translate3d(-4%, -2%, 0) scale(1); }
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.5;
+  animation: aurora-drift 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Slow-panning grid */
+@keyframes grid-pan {
+  from { background-position: 0 0; }
+  to   { background-position: 64px 64px; }
+}
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.055) 1px, transparent 1px);
+  background-size: 64px 64px;
+  animation: grid-pan 40s linear infinite;
+}
+
+/* Rotating conic border for hero/CTA surfaces */
+@keyframes conic-spin { to { transform: rotate(360deg); } }
+.conic-ring { position: relative; isolation: isolate; }
+.conic-ring::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg, transparent 0deg, #00f0ff 60deg, transparent 130deg, #00ff66 220deg, transparent 300deg);
+  animation: conic-spin 6s linear infinite;
+  z-index: -1;
+  opacity: 0.75;
+}
+
+/* Gradient shimmer on the wordmark */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.shimmer-text {
+  background: linear-gradient(100deg, #e2e8f0 20%, #00f0ff 40%, #00ff66 52%, #e2e8f0 72%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+/* Live KPI ticker */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 42s linear infinite;
+}
+.ticker-track:hover { animation-play-state: paused; }
+
+/* Soft breathing glow for live elements */
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+.breathe { animation: breathe 2.6s ease-in-out infinite; }
+
+/* Agent icon chip */
+.agent-icon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  font-size: 13px;
+  flex-shrink: 0;
+}

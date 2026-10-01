@@ -1,0 +1,30 @@
+# Render blueprint — one-click deploy of the PulseGrid API (agent mesh + REST).
+# Dashboard: deploy client/dist to any static host (see vercel.json).
+services:
+  - type: web
+    name: pulsegrid-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: CORS_ORIGIN
+        value: "*"
+      # Optional: plug in any vision endpoint; leave blank to run the labelled fallback
+      - key: VISION_API_URL
+        sync: false
+      - key: VISION_API_KEY
+        sync: false
+      # Optional: PostGIS connection for the full data plane
+      - key: PGHOST
+        sync: false
+      - key: PGDATABASE
+        sync: false
+      - key: PGUSER
+        sync: false
+      - key: PGPASSWORD
+        sync: false

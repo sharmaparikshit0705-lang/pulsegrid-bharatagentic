@@ -1,0 +1,38 @@
+{
+  "suite": "gridmaster",
+  "description": "Outcome-level evals mirroring client/scripts/agent-test.mjs. Each case runs a scenario and asserts the decision, not the wording.",
+  "cases": [
+    {
+      "id": "A-flood-reroute",
+      "scenario": "A",
+      "assert": [
+        "route.avoidsHazards === true",
+        "route.addedKm === 78",
+        "coldchain.risk < 0.1",
+        "approvals.length >= 1",
+        "run.status === 'awaiting_approval'"
+      ]
+    },
+    {
+      "id": "B-spoilage-save",
+      "scenario": "B",
+      "assert": [
+        "coldguard.risk > 0.2",
+        "coldguard.node != null",
+        "tools.includes('book_slot')",
+        "tools.includes('smart_contract_clause')",
+        "approvals.length === 0"
+      ]
+    },
+    {
+      "id": "C-safety-loop",
+      "scenario": "C",
+      "assert": [
+        "defect.severity >= 3",
+        "tools.includes('open_sla_ticket')",
+        "safetysentinel.junctionsCleared === 8",
+        "safetysentinel.savedSeconds === 440"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+# One command to run the whole agent:  docker compose up --build
+services:
+  pulsegrid-agent:
+    build: .
+    image: pulsegrid-agent:2.0.0
+    container_name: pulsegrid-agent
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      PORT: "4000"
+      CORS_ORIGIN: "*"
+      # optional: plug in your own vision endpoint (leave blank for the labelled fallback)
+      VISION_API_URL: ""
+      VISION_API_KEY: ""
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:4000/health"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped

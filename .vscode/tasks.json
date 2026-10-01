@@ -1,0 +1,74 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "PulseGrid: run everything",
+      "detail": "Ctrl+Shift+B runs this. Starts the agent API and the dashboard in two terminals.",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "PulseGrid: API (server)",
+        "PulseGrid: dashboard (client)"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "PulseGrid: API (server)",
+      "type": "shell",
+      "command": "npm install; npm start",
+      "options": {
+        "cwd": "${workspaceFolder}/server"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "group": "pulsegrid"
+      }
+    },
+    {
+      "label": "PulseGrid: dashboard (client)",
+      "type": "shell",
+      "command": "npm install; npm run dev",
+      "options": {
+        "cwd": "${workspaceFolder}/client"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "group": "pulsegrid"
+      }
+    },
+    {
+      "label": "PulseGrid: agent tests (33 assertions)",
+      "type": "shell",
+      "command": "npm install; npm run test:agents",
+      "options": {
+        "cwd": "${workspaceFolder}/client"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "PulseGrid: docker (if installed)",
+      "type": "shell",
+      "command": "docker compose up --build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "PulseGrid: prove the agent (curl)",
+      "type": "shell",
+      "command": "curl.exe -s -X POST http://localhost:4000/api/v1/agent -H \"content-type: application/json\" -d \"{\\\"request\\\":\\\"The ambulance needs a clear corridor to KMCH\\\"}\"",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# Render blueprint — NATIVE Node runtime (no Docker anywhere in the path).
+# Use this if you would rather not install Docker at all: Render runs Node
+# directly. render.yaml is the Docker variant; pick ONE.
+#
+#   Render dashboard -> New -> Blueprint -> point at this repo -> it reads this file
+#
+# Note: the build context is the REPO ROOT on purpose. The server imports the
+# agent core from client/src/agents, so that folder must be present at build time.
+services:
+  - type: web
+    name: pulsegrid-api
+    runtime: node
+    plan: free
+    buildCommand: cd server && npm ci --omit=dev
+    startCommand: node server/src/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: VISION_API_URL
+        sync: false
+      - key: VISION_API_KEY
+        sync: false
